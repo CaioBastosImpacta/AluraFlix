@@ -37,4 +37,13 @@ public class VideoMapperDomain {
                 .url(videoDomainRequest.getUrl())
                 .build();
     }
+
+    public static VideoEntity toEntity(VideoDomainResponse videoDomainResponse) {
+        return VideoEntity.builder()
+                .id(videoDomainResponse.getId())
+                .titulo(videoDomainResponse.getTitulo())
+                .descricao(videoDomainResponse.getDescricao())
+                .url(videoDomainResponse.getUrl())
+                .build();
+    }
 }

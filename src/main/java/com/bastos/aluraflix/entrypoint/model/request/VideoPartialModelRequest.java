@@ -1,15 +1,12 @@
-package com.bastos.aluraflix.usecase.domain.response;
+package com.bastos.aluraflix.entrypoint.model.request;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Builder
-@Setter
-public class VideoDomainResponse {
+public class VideoPartialModelRequest {
 
-    private Long id;
     private String titulo;
     private String descricao;
     private String url;

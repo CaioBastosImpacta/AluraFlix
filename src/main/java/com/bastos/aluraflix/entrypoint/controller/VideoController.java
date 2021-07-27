@@ -4,10 +4,11 @@ import com.bastos.aluraflix.commons.DataModelMapper;
 import com.bastos.aluraflix.commons.DataModelResponse;
 import com.bastos.aluraflix.entrypoint.mapper.VideoMapperModel;
 import com.bastos.aluraflix.entrypoint.model.request.VideoModelRequest;
+import com.bastos.aluraflix.entrypoint.model.request.VideoPartialModelRequest;
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
-import com.bastos.aluraflix.usecase.servide.VideoService;
+import com.bastos.aluraflix.usecase.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,8 @@ public class VideoController {
         return ResponseEntity.ok(dataModelResponseVideo);
     }
 
-    @PostMapping
     @Transactional
+    @PostMapping
     public ResponseEntity<DataModelResponse<VideoModelResponse>> save(@RequestBody @Validated VideoModelRequest videoModelRequest) {
 
         VideoDomainRequest videoDomainRequest = VideoMapperModel.toDomain(videoModelRequest);
@@ -60,5 +61,23 @@ public class VideoController {
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
 
         return new ResponseEntity<>(dataModelResponseVideo, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DataModelResponse<VideoModelResponse>> updatePartial(@PathVariable Long id,
+                                                                               @RequestBody VideoPartialModelRequest videoPartialModelRequest) {
+
+        VideoDomainRequest videoDomainRequest = VideoMapperModel.toDomain(videoPartialModelRequest);
+        VideoDomainResponse videoDomainResponse = videoService.update(id, videoDomainRequest);
+        VideoModelResponse videoModelResponse = VideoMapperModel.toModelResponse(videoDomainResponse);
+        DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
+
+        return ResponseEntity.ok(dataModelResponseVideo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        videoService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

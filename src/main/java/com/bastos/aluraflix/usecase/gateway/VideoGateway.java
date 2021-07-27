@@ -10,4 +10,6 @@ public interface VideoGateway {
     List<VideoDomainResponse> getAll();
     VideoDomainResponse getById(Long id);
     VideoDomainResponse save(VideoDomainRequest videoDomainRequest);
+    VideoDomainResponse update(VideoDomainResponse videoDomainResponse);
+    void deleteById(Long id);
 }

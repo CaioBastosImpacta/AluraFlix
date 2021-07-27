@@ -47,4 +47,17 @@ public class VideoImplementation implements VideoGateway {
 
         return VideoMapperDomain.toDomain(videoEntity);
     }
+
+    @Override
+    public VideoDomainResponse update(VideoDomainResponse videoDomainResponse) {
+        VideoEntity videoEntityRequest = VideoMapperDomain.toEntity(videoDomainResponse);
+        VideoEntity videoEntity = videoRepository.save(videoEntityRequest);
+
+        return VideoMapperDomain.toDomain(videoEntity);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        videoRepository.deleteById(id);
+    }
 }
