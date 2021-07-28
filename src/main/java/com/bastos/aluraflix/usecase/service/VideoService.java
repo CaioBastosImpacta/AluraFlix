@@ -1,5 +1,6 @@
 package com.bastos.aluraflix.usecase.service;
 
+import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
@@ -30,7 +31,11 @@ public class VideoService {
 
     @Transactional
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
-        return videoGateway.save(videoDomainRequest);
+        try {
+            return videoGateway.save(videoDomainRequest);
+        } catch (Exception exception) {
+            throw new ErroInternoServidor("Houve um erro ao salvar os dados do vídeo na base.");
+        }
     }
 
     @Transactional

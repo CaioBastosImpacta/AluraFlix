@@ -3,6 +3,7 @@ package com.bastos.aluraflix.entrypoint.controller.exception;
 import com.bastos.aluraflix.entrypoint.controller.exception.enums.UrlErroEnum;
 import com.bastos.aluraflix.entrypoint.model.response.CampoMensagemErrorModelResponse;
 import com.bastos.aluraflix.entrypoint.model.response.MensagemErrorModelResponse;
+import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.exception.NenhumConteudoException;
 import com.bastos.aluraflix.exception.VideoNaoRegistradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,19 @@ public class HandlerControllerAdviceException extends ResponseEntityExceptionHan
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ExceptionHandler({ ErroInternoServidor.class })
+    public ResponseEntity<?> handleInternalServer(Exception exception) {
+        MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
+                .codigo(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .mensagem(exception.getMessage())
+                .urlErro(UrlErroEnum.buscaUrl(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .build();
+
+        return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler({ VideoNaoRegistradoException.class })
     public ResponseEntity<?> handleNotFound(Exception exception) {
-
         MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
                 .codigo(String.valueOf(HttpStatus.NOT_FOUND.value()))
                 .mensagem(exception.getMessage())
