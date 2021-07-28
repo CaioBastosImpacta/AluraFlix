@@ -3,6 +3,8 @@ package com.bastos.aluraflix.dataprovider.implementation;
 import com.bastos.aluraflix.dataprovider.mapper.VideoMapperDomain;
 import com.bastos.aluraflix.dataprovider.repository.VideoRepository;
 import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
+import com.bastos.aluraflix.exception.NenhumConteudoException;
+import com.bastos.aluraflix.exception.VideoNaoRegistradoException;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
@@ -23,7 +25,7 @@ public class VideoImplementation implements VideoGateway {
         List<VideoEntity> videosEntities = videoRepository.findAll();
 
         if (videosEntities.isEmpty()) {
-            return null;
+            throw new NenhumConteudoException();
         }
 
         return VideoMapperDomain.toDomain(videosEntities);
@@ -31,13 +33,11 @@ public class VideoImplementation implements VideoGateway {
 
     @Override
     public VideoDomainResponse getById(Long id) {
-        Optional<VideoEntity> videoEntity = videoRepository.findById(id);
+        VideoEntity videoEntity = videoRepository.findById(id)
+                .orElseThrow(() -> new VideoNaoRegistradoException(
+                        String.format("O video com o código '%s' não foi encontrado, nos registros.", id)));
 
-        if (videoEntity.isEmpty()) {
-            return null;
-        }
-
-        return VideoMapperDomain.toDomain(videoEntity.get());
+        return VideoMapperDomain.toDomain(videoEntity);
     }
 
     @Override

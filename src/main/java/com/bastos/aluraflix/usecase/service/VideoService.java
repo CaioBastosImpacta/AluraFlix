@@ -28,6 +28,7 @@ public class VideoService {
         return videoGateway.getById(id);
     }
 
+    @Transactional
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
         return videoGateway.save(videoDomainRequest);
     }
