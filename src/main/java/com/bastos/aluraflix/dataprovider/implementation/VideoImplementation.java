@@ -8,16 +8,15 @@ import com.bastos.aluraflix.exception.VideoNaoRegistradoException;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
+@AllArgsConstructor
 @Component
 public class VideoImplementation implements VideoGateway {
 
-    @Autowired
     VideoRepository videoRepository;
 
     @Override

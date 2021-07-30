@@ -9,7 +9,7 @@ import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.service.VideoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,17 +19,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/videos")
 public class VideoController {
 
     VideoService videoService;
     DataModelMapper dataModelMapper;
-
-    @Autowired
-    public VideoController(VideoService videoService, DataModelMapper dataModelMapper) {
-        this.videoService = videoService;
-        this.dataModelMapper = dataModelMapper;
-    }
 
     @GetMapping
     public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll() {

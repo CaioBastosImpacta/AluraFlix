@@ -4,6 +4,8 @@ import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +13,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+@AllArgsConstructor
 @Service
 public class VideoService {
 
     VideoGateway videoGateway;
-
-    @Autowired
-    public VideoService(VideoGateway videoGateway) {
-        this.videoGateway = videoGateway;
-    }
 
     public List<VideoDomainResponse> getAllVideos() {
         return videoGateway.getAll();
