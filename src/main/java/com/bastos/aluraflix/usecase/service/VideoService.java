@@ -57,6 +57,8 @@ public class VideoService {
             videoDomainResponse.setUrl(videoDomainRequest.getUrl());
         }
 
+        videoDomainResponse.setCategoriaId(videoDomainResponse.getCategoriaId());
+
         return videoGateway.update(videoDomainResponse);
     }
 

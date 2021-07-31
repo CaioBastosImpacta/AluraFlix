@@ -19,6 +19,9 @@ public class CategoriaEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String nome;
+
+    @Column(nullable = false)
     private String titulo;
 
     @Column(nullable = false)

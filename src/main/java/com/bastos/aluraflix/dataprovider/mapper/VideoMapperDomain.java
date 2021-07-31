@@ -1,5 +1,6 @@
 package com.bastos.aluraflix.dataprovider.mapper;
 
+import ch.qos.logback.classic.spi.LoggingEventVO;
 import com.bastos.aluraflix.dataprovider.repository.entity.CategoriaEntity;
 import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
@@ -54,6 +55,13 @@ public class VideoMapperDomain {
                 .titulo(videoDomainResponse.getTitulo())
                 .descricao(videoDomainResponse.getDescricao())
                 .url(videoDomainResponse.getUrl())
+                .categoria(toEntityCategoriaId(videoDomainResponse))
+                .build();
+    }
+
+    private static CategoriaEntity toEntityCategoriaId(VideoDomainResponse videoDomainResponse) {
+        return CategoriaEntity.builder()
+                .id(Long.parseLong(videoDomainResponse.getCategoriaId()))
                 .build();
     }
 }

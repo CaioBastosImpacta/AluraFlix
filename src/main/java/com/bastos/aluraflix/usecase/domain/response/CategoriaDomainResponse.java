@@ -12,6 +12,7 @@ import java.util.List;
 public class CategoriaDomainResponse {
 
     private Long id;
+    private String nome;
     private String titulo;
     private String cor;
     private List<VideoDomainResponse> videos;
