@@ -3,6 +3,7 @@ package com.bastos.aluraflix.usecase.service;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
+import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class CategoriaService {
 
     CategoriaGateway categoriaGateway;
+    VideoService videoService;
 
     public List<CategoriaDomainResponse> getAllCategorias() {
         return categoriaGateway.getAll();
@@ -49,5 +51,14 @@ public class CategoriaService {
     public void deleteById(Long id) {
         getByIdCategoria(id);
         categoriaGateway.deleteById(id);
+    }
+
+    public CategoriaDomainResponse getByIdCategoriaVideo(Long id) {
+        CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
+        List<VideoDomainResponse> videosDomainResponses = videoService.getByIdCategoriaVideo(id);
+
+        categoriaDomainResponse.setVideos(videosDomainResponses);
+
+        return categoriaDomainResponse;
     }
 }

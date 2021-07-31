@@ -45,6 +45,16 @@ public class CategoriaController {
         return ResponseEntity.ok(dataModelResponse);
     }
 
+    @GetMapping("/{id}/videos")
+    public ResponseEntity<DataModelResponse<List<CategetoriaModelResponse>>> getByIdCategoriaVideo(@PathVariable Long id) {
+
+        CategoriaDomainResponse categoriaDomainResponse = categoriaService.getByIdCategoriaVideo(id);
+        CategetoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
+
+        return ResponseEntity.ok(dataModelResponse);
+    }
+
     @PostMapping
     public ResponseEntity<DataModelResponse<CategetoriaModelResponse>> save(@RequestBody @Validated CategoriaModelRequest categoriaModelRequest) {
 

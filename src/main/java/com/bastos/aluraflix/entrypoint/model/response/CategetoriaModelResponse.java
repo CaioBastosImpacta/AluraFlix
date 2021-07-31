@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -15,4 +17,5 @@ public class CategetoriaModelResponse {
     private Long id;
     private String titulo;
     private String cor;
+    private List<VideoModelResponse> videos;
 }

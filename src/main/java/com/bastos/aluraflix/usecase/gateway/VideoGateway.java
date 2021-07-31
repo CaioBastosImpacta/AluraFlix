@@ -12,4 +12,6 @@ public interface VideoGateway {
     VideoDomainResponse save(VideoDomainRequest videoDomainRequest);
     VideoDomainResponse update(VideoDomainResponse videoDomainResponse);
     void deleteById(Long id);
+    List<VideoDomainResponse> findByCategoriaId(Long id);
+    List<VideoDomainResponse> findByTitulo(String search);
 }

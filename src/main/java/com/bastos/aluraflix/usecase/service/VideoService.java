@@ -3,6 +3,7 @@ package com.bastos.aluraflix.usecase.service;
 import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
+import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -16,9 +17,14 @@ import java.util.Objects;
 public class VideoService {
 
     VideoGateway videoGateway;
-    CategoriaService categoriaService;
+    CategoriaGateway categoriaGateway;
 
-    public List<VideoDomainResponse> getAllVideos() {
+    public List<VideoDomainResponse> getAllVideos(String search) {
+
+        if (StringUtils.isNotBlank(search)) {
+            return videoGateway.findByTitulo(search);
+        }
+
         return videoGateway.getAll();
     }
 
@@ -63,7 +69,11 @@ public class VideoService {
         Long idCategoria = videoDomainRequest.getCategoria().getId();
 
         if (Objects.nonNull(idCategoria)) {
-            categoriaService.getByIdCategoria(idCategoria);
+            categoriaGateway.getById(idCategoria);
         }
+    }
+
+    public List<VideoDomainResponse> getByIdCategoriaVideo(Long id) {
+        return videoGateway.findByCategoriaId(id);
     }
 }

@@ -23,10 +23,7 @@ public class VideoImplementation implements VideoGateway {
     @Override
     public List<VideoDomainResponse> getAll() {
         List<VideoEntity> videosEntities = videoRepository.findAll();
-
-        if (videosEntities.isEmpty()) {
-            throw new NenhumConteudoException();
-        }
+        validaRetornoListaVazia(videosEntities);
 
         return VideoMapperDomain.toDomain(videosEntities);
     }
@@ -62,5 +59,28 @@ public class VideoImplementation implements VideoGateway {
     @Override
     public void deleteById(Long id) {
         videoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<VideoDomainResponse> findByCategoriaId(Long id) {
+        List<VideoEntity> videoEntities = videoRepository.findByCategoriaId(id)
+                .orElseThrow(() -> new RegistradoNaoEncontradoException(
+                        String.format("Não existe video relacionado a categoria '%s'.", id)));
+
+        return VideoMapperDomain.toDomain(videoEntities);
+    }
+
+    @Override
+    public List<VideoDomainResponse> findByTitulo(String search) {
+        List<VideoEntity> videoEntities = videoRepository.findByTituloContains(search);
+        validaRetornoListaVazia(videoEntities);
+
+        return VideoMapperDomain.toDomain(videoEntities);
+    }
+
+    private void validaRetornoListaVazia(List<VideoEntity> videoEntities) {
+        if (videoEntities.isEmpty()) {
+            throw new NenhumConteudoException();
+        }
     }
 }

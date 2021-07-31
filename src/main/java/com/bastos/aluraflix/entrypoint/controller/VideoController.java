@@ -27,9 +27,9 @@ public class VideoController {
     DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll() {
+    public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll(String search) {
 
-        List<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos();
+        List<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search);
         List<VideoModelResponse> videosModelsResponses = VideoMapperModel.toModelResponse(videosDomainsResponses);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videosModelsResponses);
 
