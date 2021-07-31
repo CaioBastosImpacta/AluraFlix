@@ -3,6 +3,7 @@ package com.bastos.aluraflix.entrypoint.controller.exception;
 import com.bastos.aluraflix.entrypoint.controller.exception.enums.UrlErroEnum;
 import com.bastos.aluraflix.entrypoint.model.response.CampoMensagemErrorModelResponse;
 import com.bastos.aluraflix.entrypoint.model.response.MensagemErrorModelResponse;
+import com.bastos.aluraflix.exception.BadRequestException;
 import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.exception.NenhumConteudoException;
 import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
@@ -53,6 +54,17 @@ public class HandlerControllerAdviceException extends ResponseEntityExceptionHan
                 .build();
 
         return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({ BadRequestException.class })
+    public ResponseEntity<?> handleBadRequest(Exception exception) {
+        MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
+                .codigo(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                .mensagem(exception.getMessage())
+                .urlErro(UrlErroEnum.buscaUrl(HttpStatus.BAD_REQUEST.value()))
+                .build();
+
+        return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override

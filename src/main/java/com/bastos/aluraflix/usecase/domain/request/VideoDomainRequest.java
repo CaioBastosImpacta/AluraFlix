@@ -10,4 +10,5 @@ public class VideoDomainRequest {
     private String titulo;
     private String descricao;
     private String url;
+    private CategoriaDomainRequest categoria;
 }

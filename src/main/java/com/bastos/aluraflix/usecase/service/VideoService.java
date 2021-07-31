@@ -5,6 +5,7 @@ import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class VideoService {
 
     VideoGateway videoGateway;
+    CategoriaService categoriaService;
 
     public List<VideoDomainResponse> getAllVideos() {
         return videoGateway.getAll();
@@ -25,6 +27,8 @@ public class VideoService {
     }
 
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
+        validaIdCategoria(videoDomainRequest);
+
         try {
             return videoGateway.save(videoDomainRequest);
         } catch (Exception exception) {
@@ -53,5 +57,13 @@ public class VideoService {
     public void deleteById(Long id) {
         getByIdVideo(id);
         videoGateway.deleteById(id);
+    }
+
+    private void validaIdCategoria(VideoDomainRequest videoDomainRequest) {
+        Long idCategoria = videoDomainRequest.getCategoria().getId();
+
+        if (Objects.nonNull(idCategoria)) {
+            categoriaService.getByIdCategoria(idCategoria);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.bastos.aluraflix.entrypoint.mapper;
 
+import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.VideoModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.VideoPartialModelRequest;
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
+import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 
@@ -29,6 +31,7 @@ public class VideoMapperModel {
                 .titulo(videoDomainResponse.getTitulo())
                 .descricao(videoDomainResponse.getDescricao())
                 .url(videoDomainResponse.getUrl())
+                .categoriaId(videoDomainResponse.getCategoriaId())
                 .build();
     }
 
@@ -37,6 +40,13 @@ public class VideoMapperModel {
                 .titulo(videoModelRequest.getTitulo())
                 .descricao(videoModelRequest.getDescricao())
                 .url(videoModelRequest.getUrl())
+                .categoria(toDomainCategoria(videoModelRequest.getCategoria()))
+                .build();
+    }
+
+    private static CategoriaDomainRequest toDomainCategoria(CategoriaModelRequest categoria) {
+        return CategoriaDomainRequest.builder()
+                .id(categoria.getId())
                 .build();
     }
 

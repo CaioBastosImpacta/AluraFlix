@@ -6,6 +6,7 @@ import com.bastos.aluraflix.entrypoint.mapper.VideoMapperModel;
 import com.bastos.aluraflix.entrypoint.model.request.VideoModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.VideoPartialModelRequest;
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
+import com.bastos.aluraflix.entrypoint.validation.VideoValidation;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.service.VideoService;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -49,6 +49,7 @@ public class VideoController {
     @PostMapping
     public ResponseEntity<DataModelResponse<VideoModelResponse>> save(@RequestBody @Validated VideoModelRequest videoModelRequest) {
 
+        VideoValidation.validate(videoModelRequest);
         VideoDomainRequest videoDomainRequest = VideoMapperModel.toDomain(videoModelRequest);
         VideoDomainResponse videoDomainResponse = videoService.save(videoDomainRequest);
         VideoModelResponse videoModelResponse = VideoMapperModel.toModelResponse(videoDomainResponse);
