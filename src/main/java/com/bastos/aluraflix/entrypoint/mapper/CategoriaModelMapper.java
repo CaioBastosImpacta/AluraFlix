@@ -4,7 +4,7 @@ import com.bastos.aluraflix.entrypoint.model.request.CategoriaPartialModelReques
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
-import com.bastos.aluraflix.entrypoint.model.response.CategetoriaModelResponse;
+import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 public class CategoriaModelMapper {
 
-    public static List<CategetoriaModelResponse> toModelResponse(List<CategoriaDomainResponse> categoriasDomainResponse) {
+    public static List<CategoriaModelResponse> toModelResponse(List<CategoriaDomainResponse> categoriasDomainResponse) {
         return categoriasDomainResponse.stream()
-                .map(categoriaDomainResponse -> CategetoriaModelResponse.builder()
+                .map(categoriaDomainResponse -> CategoriaModelResponse.builder()
                         .id(categoriaDomainResponse.getId())
                         .nome(categoriaDomainResponse.getNome())
                         .titulo(categoriaDomainResponse.getTitulo())
@@ -24,8 +24,8 @@ public class CategoriaModelMapper {
                         .build()).collect(Collectors.toList());
     }
 
-    public static CategetoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {
-        return CategetoriaModelResponse.builder()
+    public static CategoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {
+        return CategoriaModelResponse.builder()
                 .id(categoriaDomainResponse.getId())
                 .nome(categoriaDomainResponse.getNome())
                 .titulo(categoriaDomainResponse.getTitulo())

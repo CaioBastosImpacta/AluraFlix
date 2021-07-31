@@ -3,12 +3,14 @@ package com.bastos.aluraflix.entrypoint.mapper;
 import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.VideoModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.VideoPartialModelRequest;
+import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class VideoMapperModel {
@@ -21,8 +23,19 @@ public class VideoMapperModel {
                             .titulo(videoDomainResponse.getTitulo())
                             .descricao(videoDomainResponse.getDescricao())
                             .url(videoDomainResponse.getUrl())
+                            .categoria(toModelResponseCategoria(videoDomainResponse))
                         .build()
                 ).collect(Collectors.toList());
+    }
+
+    private static CategoriaModelResponse toModelResponseCategoria(VideoDomainResponse videoDomainResponse) {
+        if (Objects.nonNull(videoDomainResponse)) {
+            return CategoriaModelResponse.builder()
+                    .id(videoDomainResponse.getCategoria().getId())
+                    .build();
+        }
+
+        return CategoriaModelResponse.builder().build();
     }
 
     public static VideoModelResponse toModelResponse(VideoDomainResponse videoDomainResponse) {
@@ -31,7 +44,7 @@ public class VideoMapperModel {
                 .titulo(videoDomainResponse.getTitulo())
                 .descricao(videoDomainResponse.getDescricao())
                 .url(videoDomainResponse.getUrl())
-                .categoriaId(videoDomainResponse.getCategoriaId())
+                .categoria(toModelResponseCategoria(videoDomainResponse))
                 .build();
     }
 

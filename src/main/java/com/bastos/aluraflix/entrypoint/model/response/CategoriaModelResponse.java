@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CategetoriaModelResponse {
+public class CategoriaModelResponse {
 
     private Long id;
     private String nome;

@@ -5,7 +5,7 @@ import com.bastos.aluraflix.commons.DataModelResponse;
 import com.bastos.aluraflix.entrypoint.mapper.CategoriaModelMapper;
 import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.CategoriaPartialModelRequest;
-import com.bastos.aluraflix.entrypoint.model.response.CategetoriaModelResponse;
+import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.service.CategoriaService;
@@ -26,53 +26,53 @@ public class CategoriaController {
     DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<List<CategetoriaModelResponse>>> getAll() {
+    public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getAll() {
 
         List<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias();
-        List<CategetoriaModelResponse> categoriasModelResponses = CategoriaModelMapper.toModelResponse(categoriasDomainResponse);
+        List<CategoriaModelResponse> categoriasModelResponses = CategoriaModelMapper.toModelResponse(categoriasDomainResponse);
         DataModelResponse dataModelResponseCategoria = dataModelMapper.setDataModel(categoriasModelResponses);
 
         return ResponseEntity.ok(dataModelResponseCategoria);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DataModelResponse<CategetoriaModelResponse>> getById(@PathVariable Long id) {
+    public ResponseEntity<DataModelResponse<CategoriaModelResponse>> getById(@PathVariable Long id) {
 
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.getByIdCategoria(id);
-        CategetoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);
     }
 
     @GetMapping("/{id}/videos")
-    public ResponseEntity<DataModelResponse<List<CategetoriaModelResponse>>> getByIdCategoriaVideo(@PathVariable Long id) {
+    public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getByIdCategoriaVideo(@PathVariable Long id) {
 
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.getByIdCategoriaVideo(id);
-        CategetoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);
     }
 
     @PostMapping
-    public ResponseEntity<DataModelResponse<CategetoriaModelResponse>> save(@RequestBody @Validated CategoriaModelRequest categoriaModelRequest) {
+    public ResponseEntity<DataModelResponse<CategoriaModelResponse>> save(@RequestBody @Validated CategoriaModelRequest categoriaModelRequest) {
 
         CategoriaDomainRequest categoriaDomainRequest = CategoriaModelMapper.toDomain(categoriaModelRequest);
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.save(categoriaDomainRequest);
-        CategetoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return new ResponseEntity<>(dataModelResponse, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DataModelResponse<CategetoriaModelResponse>> updatePartial(@PathVariable Long id,
-                                                                                     @RequestBody CategoriaPartialModelRequest categoriaPartialModelRequest) {
+    public ResponseEntity<DataModelResponse<CategoriaModelResponse>> updatePartial(@PathVariable Long id,
+                                                                                   @RequestBody CategoriaPartialModelRequest categoriaPartialModelRequest) {
 
         CategoriaDomainRequest categoriaDomainRequest = CategoriaModelMapper.toDomain(categoriaPartialModelRequest);
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.update(id, categoriaDomainRequest);
-        CategetoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);

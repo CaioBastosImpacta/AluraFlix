@@ -16,5 +16,5 @@ public class VideoModelResponse {
     private String titulo;
     private String descricao;
     private String url;
-    private String categoriaId;
+    private CategoriaModelResponse categoria;
 }

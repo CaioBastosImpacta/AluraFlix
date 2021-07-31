@@ -1,13 +1,14 @@
 package com.bastos.aluraflix.dataprovider.mapper;
 
-import ch.qos.logback.classic.spi.LoggingEventVO;
 import com.bastos.aluraflix.dataprovider.repository.entity.CategoriaEntity;
 import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
+import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class VideoMapperDomain {
@@ -20,8 +21,19 @@ public class VideoMapperDomain {
                             .titulo(videoEntity.getTitulo())
                             .descricao(videoEntity.getDescricao())
                             .url(videoEntity.getUrl())
+                            .categoria(toDomainCategoria(videoEntity))
                         .build()
                 ).collect(Collectors.toList());
+    }
+
+    private static CategoriaDomainResponse toDomainCategoria(VideoEntity videoEntity) {
+        if (Objects.nonNull(videoEntity.getCategoria())) {
+            return CategoriaDomainResponse.builder()
+                    .id(videoEntity.getCategoria().getId())
+                    .build();
+        }
+
+        return CategoriaDomainResponse.builder().build();
     }
 
     public static VideoDomainResponse toDomain(VideoEntity videoEntity) {
@@ -30,7 +42,7 @@ public class VideoMapperDomain {
                 .titulo(videoEntity.getTitulo())
                 .descricao(videoEntity.getDescricao())
                 .url(videoEntity.getUrl())
-                .categoriaId(String.valueOf(videoEntity.getCategoria().getId()))
+                .categoria(toDomainCategoria(videoEntity))
                 .build();
     }
 
@@ -61,7 +73,7 @@ public class VideoMapperDomain {
 
     private static CategoriaEntity toEntityCategoriaId(VideoDomainResponse videoDomainResponse) {
         return CategoriaEntity.builder()
-                .id(Long.parseLong(videoDomainResponse.getCategoriaId()))
+                .id(videoDomainResponse.getCategoria().getId())
                 .build();
     }
 }
