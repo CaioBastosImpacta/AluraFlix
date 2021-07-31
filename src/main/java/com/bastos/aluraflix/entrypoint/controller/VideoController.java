@@ -46,7 +46,6 @@ public class VideoController {
         return ResponseEntity.ok(dataModelResponseVideo);
     }
 
-    @Transactional
     @PostMapping
     public ResponseEntity<DataModelResponse<VideoModelResponse>> save(@RequestBody @Validated VideoModelRequest videoModelRequest) {
 
@@ -71,7 +70,7 @@ public class VideoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         videoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

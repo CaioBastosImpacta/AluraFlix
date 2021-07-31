@@ -4,13 +4,14 @@ import com.bastos.aluraflix.dataprovider.mapper.VideoMapperDomain;
 import com.bastos.aluraflix.dataprovider.repository.VideoRepository;
 import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
 import com.bastos.aluraflix.exception.NenhumConteudoException;
-import com.bastos.aluraflix.exception.VideoNaoRegistradoException;
+import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
@@ -33,12 +34,13 @@ public class VideoImplementation implements VideoGateway {
     @Override
     public VideoDomainResponse getById(Long id) {
         VideoEntity videoEntity = videoRepository.findById(id)
-                .orElseThrow(() -> new VideoNaoRegistradoException(
+                .orElseThrow(() -> new RegistradoNaoEncontradoException(
                         String.format("O video com o código '%s' não foi encontrado, nos registros.", id)));
 
         return VideoMapperDomain.toDomain(videoEntity);
     }
 
+    @Transactional
     @Override
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
         VideoEntity videoEntityRequest = VideoMapperDomain.toEntity(videoDomainRequest);
@@ -47,6 +49,7 @@ public class VideoImplementation implements VideoGateway {
         return VideoMapperDomain.toDomain(videoEntity);
     }
 
+    @Transactional
     @Override
     public VideoDomainResponse update(VideoDomainResponse videoDomainResponse) {
         VideoEntity videoEntityRequest = VideoMapperDomain.toEntity(videoDomainResponse);
@@ -55,6 +58,7 @@ public class VideoImplementation implements VideoGateway {
         return VideoMapperDomain.toDomain(videoEntity);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         videoRepository.deleteById(id);

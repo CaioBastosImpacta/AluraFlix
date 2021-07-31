@@ -1,19 +1,53 @@
 package com.bastos.aluraflix.usecase.service;
 
+import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
+import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
 public class CategoriaService {
 
-    CategoriaGateway categoriaRepository;
+    CategoriaGateway categoriaGateway;
 
     public List<CategoriaDomainResponse> getAllCategorias() {
-        return categoriaRepository.getAll();
+        return categoriaGateway.getAll();
+    }
+
+    public CategoriaDomainResponse getByIdCategoria(Long id) {
+        return categoriaGateway.getById(id);
+    }
+
+    public CategoriaDomainResponse save(CategoriaDomainRequest categoriaDomainRequest) {
+        try {
+            return categoriaGateway.save(categoriaDomainRequest);
+        } catch (Exception exception) {
+            throw new ErroInternoServidor("Houve um erro ao salvar os dados da categoria na base.");
+        }
+    }
+
+    public CategoriaDomainResponse update(Long id, CategoriaDomainRequest categoriaDomainRequest) {
+        CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
+
+        if (Objects.nonNull(categoriaDomainRequest.getTitulo())) {
+            categoriaDomainResponse.setTitulo(categoriaDomainRequest.getTitulo());
+        }
+
+        if (Objects.nonNull(categoriaDomainRequest.getCor())) {
+            categoriaDomainResponse.setCor(categoriaDomainRequest.getCor());
+        }
+
+        return categoriaGateway.update(categoriaDomainResponse);
+    }
+
+    public void deleteById(Long id) {
+        getByIdCategoria(id);
+        categoriaGateway.deleteById(id);
     }
 }

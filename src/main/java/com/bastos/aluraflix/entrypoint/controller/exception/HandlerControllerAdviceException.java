@@ -5,7 +5,7 @@ import com.bastos.aluraflix.entrypoint.model.response.CampoMensagemErrorModelRes
 import com.bastos.aluraflix.entrypoint.model.response.MensagemErrorModelResponse;
 import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.exception.NenhumConteudoException;
-import com.bastos.aluraflix.exception.VideoNaoRegistradoException;
+import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,7 +16,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -45,7 +44,7 @@ public class HandlerControllerAdviceException extends ResponseEntityExceptionHan
         return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({ VideoNaoRegistradoException.class })
+    @ExceptionHandler({ RegistradoNaoEncontradoException.class })
     public ResponseEntity<?> handleNotFound(Exception exception) {
         MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
                 .codigo(String.valueOf(HttpStatus.NOT_FOUND.value()))

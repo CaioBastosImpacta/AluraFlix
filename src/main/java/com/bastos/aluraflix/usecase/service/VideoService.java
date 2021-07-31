@@ -5,11 +5,8 @@ import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +24,6 @@ public class VideoService {
         return videoGateway.getById(id);
     }
 
-    @Transactional
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
         try {
             return videoGateway.save(videoDomainRequest);
@@ -36,7 +32,6 @@ public class VideoService {
         }
     }
 
-    @Transactional
     public VideoDomainResponse update(Long id, VideoDomainRequest videoDomainRequest) {
         VideoDomainResponse videoDomainResponse = getByIdVideo(id);
 
@@ -55,7 +50,6 @@ public class VideoService {
         return videoGateway.update(videoDomainResponse);
     }
 
-    @Transactional
     public void deleteById(Long id) {
         getByIdVideo(id);
         videoGateway.deleteById(id);
