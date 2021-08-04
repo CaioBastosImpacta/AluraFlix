@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class CategoriaDomainMapper {
 
+    private static final String LIVRE = "LIVRE";
+
     public static List<CategoriaDomainResponse> toDomain(List<CategoriaEntity> categoriasEntities) {
         return categoriasEntities.stream()
                 .map(categoriaEntity -> CategoriaDomainResponse.builder()
@@ -31,7 +33,7 @@ public class CategoriaDomainMapper {
 
     public static CategoriaEntity toEntity(CategoriaDomainRequest categoriaDomainRequest) {
         return CategoriaEntity.builder()
-                .nome(StringUtils.isBlank(categoriaDomainRequest.getNome()) ? "LIVRE" : categoriaDomainRequest.getNome() )
+                .nome(StringUtils.isBlank(categoriaDomainRequest.getNome()) ? LIVRE : categoriaDomainRequest.getNome())
                 .titulo(categoriaDomainRequest.getTitulo())
                 .cor(categoriaDomainRequest.getCor())
                 .build();

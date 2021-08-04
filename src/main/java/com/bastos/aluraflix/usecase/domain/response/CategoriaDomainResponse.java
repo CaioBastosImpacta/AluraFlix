@@ -1,14 +1,14 @@
 package com.bastos.aluraflix.usecase.domain.response;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Builder
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoriaDomainResponse {
 
     private Long id;
