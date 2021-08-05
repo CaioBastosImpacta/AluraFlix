@@ -73,13 +73,18 @@ public class CategoriaService {
     }
 
     public CategoriaDomainResponse getByIdCategoriaVideo(Long id) {
+        CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
+
         List<VideoDomainResponse> videosDomainResponses = videoService.getByIdCategoriaVideo(id);
 
         if (CollectionUtils.isEmpty(videosDomainResponses)) {
             throw new RegistradoNaoEncontradoException(String.format("Não existem videos cadastrados na categoria '%s'", id));
         }
 
-        CategoriaDomainResponse categoriaDomainResponse = CategoriaDomainResponse.builder()
+        categoriaDomainResponse = CategoriaDomainResponse.builder()
+                .id(categoriaDomainResponse.getId())
+                .titulo(categoriaDomainResponse.getTitulo())
+                .cor(categoriaDomainResponse.getCor())
                 .videos(videosDomainResponses)
                 .build();
 
