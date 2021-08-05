@@ -19,13 +19,11 @@ public class CategoriaDomainMapperTest {
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), categoriaDomainResponses.get(0).getId()),
-                () -> assertEquals("LIVRE", categoriaDomainResponses.get(0).getNome()),
-                () -> assertEquals("Categoria Livre", categoriaDomainResponses.get(0).getTitulo()),
+                () -> assertEquals("LIVRE", categoriaDomainResponses.get(0).getTitulo()),
                 () -> assertEquals("verde", categoriaDomainResponses.get(0).getCor()),
 
                 () -> assertEquals(Long.valueOf(2), categoriaDomainResponses.get(1).getId()),
-                () -> assertEquals("+12", categoriaDomainResponses.get(1).getNome()),
-                () -> assertEquals("Proibido para menores de 12 anos", categoriaDomainResponses.get(1).getTitulo()),
+                () -> assertEquals("+12", categoriaDomainResponses.get(1).getTitulo()),
                 () -> assertEquals("laranja", categoriaDomainResponses.get(1).getCor())
         );
     }
@@ -38,8 +36,7 @@ public class CategoriaDomainMapperTest {
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), categoriaDomainResponse.getId()),
-                () -> assertEquals("LIVRE", categoriaDomainResponse.getNome()),
-                () -> assertEquals("Categoria Livre", categoriaDomainResponse.getTitulo()),
+                () -> assertEquals("LIVRE", categoriaDomainResponse.getTitulo()),
                 () -> assertEquals("verde", categoriaDomainResponse.getCor())
         );
     }
@@ -51,8 +48,7 @@ public class CategoriaDomainMapperTest {
         assertNotNull(categoriaEntity);
 
         assertAll(
-                () -> assertEquals("LIVRE", categoriaEntity.getNome()),
-                () -> assertEquals("Categoria Livre", categoriaEntity.getTitulo()),
+                () -> assertEquals("LIVRE", categoriaEntity.getTitulo()),
                 () -> assertEquals("verde", categoriaEntity.getCor())
         );
     }
@@ -64,8 +60,7 @@ public class CategoriaDomainMapperTest {
         assertNotNull(categoriaEntity);
 
         assertAll(
-                () -> assertEquals("LIVRE", categoriaEntity.getNome()),
-                () -> assertEquals("Categoria Livre", categoriaEntity.getTitulo()),
+                () -> assertEquals("LIVRE", categoriaEntity.getTitulo()),
                 () -> assertEquals("verde", categoriaEntity.getCor())
         );
     }
@@ -78,8 +73,7 @@ public class CategoriaDomainMapperTest {
 
         assertAll(
                 () -> assertEquals(Long.valueOf(2), categoriaEntity.getId()),
-                () -> assertEquals("+12", categoriaEntity.getNome()),
-                () -> assertEquals("Proibido para menores de 12 anos", categoriaEntity.getTitulo()),
+                () -> assertEquals("+12", categoriaEntity.getTitulo()),
                 () -> assertEquals("laranja", categoriaEntity.getCor())
         );
     }

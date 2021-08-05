@@ -1,5 +1,6 @@
 package com.bastos.aluraflix.usecase.service;
 
+import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
@@ -7,6 +8,7 @@ import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.service.enums.CategoriaEnum;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.Optional;
 @Service
 public class CategoriaService {
 
-    CategoriaGateway categoriaGateway;
-    VideoService videoService;
+    private final CategoriaGateway categoriaGateway;
+    private final VideoService videoService;
 
     public List<CategoriaDomainResponse> getAllCategorias() {
         return categoriaGateway.getAll();
@@ -31,10 +33,12 @@ public class CategoriaService {
     public CategoriaDomainResponse save(CategoriaDomainRequest categoriaDomainRequest) {
         try {
             CategoriaDomainResponse categoriaDomainResponse = categoriaGateway.save(categoriaDomainRequest);
-            Optional<String> nomeCategoria = CategoriaEnum.buscarNomeCategoriaById(categoriaDomainResponse.getId());
+            Optional<String> nomeCategoria = CategoriaEnum.buscarTituloCategoriaById(categoriaDomainResponse.getId());
 
             if (nomeCategoria.isPresent()) {
-                categoriaDomainResponse.setNome(nomeCategoria.get());
+                categoriaDomainResponse = CategoriaDomainResponse.builder()
+                        .titulo(nomeCategoria.get())
+                        .build();
                 categoriaDomainResponse = categoriaGateway.update(categoriaDomainResponse);
             }
 
@@ -49,11 +53,15 @@ public class CategoriaService {
         CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
 
         if (Objects.nonNull(categoriaDomainRequest.getTitulo())) {
-            categoriaDomainResponse.setTitulo(categoriaDomainRequest.getTitulo());
+            categoriaDomainResponse = CategoriaDomainResponse.builder()
+                    .titulo(categoriaDomainRequest.getTitulo())
+                    .build();
         }
 
         if (Objects.nonNull(categoriaDomainRequest.getCor())) {
-            categoriaDomainResponse.setCor(categoriaDomainRequest.getCor());
+            categoriaDomainResponse = CategoriaDomainResponse.builder()
+                    .cor(categoriaDomainRequest.getCor())
+                    .build();
         }
 
         return categoriaGateway.update(categoriaDomainResponse);
@@ -65,10 +73,15 @@ public class CategoriaService {
     }
 
     public CategoriaDomainResponse getByIdCategoriaVideo(Long id) {
-        CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
         List<VideoDomainResponse> videosDomainResponses = videoService.getByIdCategoriaVideo(id);
 
-        categoriaDomainResponse.setVideos(videosDomainResponses);
+        if (CollectionUtils.isEmpty(videosDomainResponses)) {
+            throw new RegistradoNaoEncontradoException(String.format("Não existem videos cadastrados na categoria '%s'", id));
+        }
+
+        CategoriaDomainResponse categoriaDomainResponse = CategoriaDomainResponse.builder()
+                .videos(videosDomainResponses)
+                .build();
 
         return categoriaDomainResponse;
     }

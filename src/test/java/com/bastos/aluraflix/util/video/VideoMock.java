@@ -81,4 +81,24 @@ public class VideoMock {
 
         return videoDomainResponse;
     }
+
+    public static List<VideoDomainResponse> mockBuilderVideosDomainResponse() {
+        VideoDomainResponse videoDomainResponse =
+                new VideoDomainResponseBuilder()
+                        .comId(Long.valueOf(1))
+                        .comTitulo("Homem de Ferro")
+                        .comDescricao("Filme numero 1")
+                        .comUrl("/homem-de-ferro")
+                        .criar();
+
+        VideoDomainResponse videoDomainResponse2 =
+                new VideoDomainResponseBuilder()
+                        .comId(Long.valueOf(2))
+                        .comTitulo("Homem de Ferro 2")
+                        .comDescricao("Filme numero 2")
+                        .comUrl("/homem-de-ferro-2")
+                        .criar();
+
+        return List.of(videoDomainResponse, videoDomainResponse2);
+    }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class CategoriaImplementation implements CategoriaGateway {
 
-    CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Override
     public List<CategoriaDomainResponse> getAll() {

@@ -14,13 +14,13 @@ public enum CategoriaEnum {
     LIVRE(1L, "LIVRE");
 
     private Long id;
-    private String nome;
+    private String titulo;
 
-    public static Optional<String> buscarNomeCategoriaById(Long id) {
+    public static Optional<String> buscarTituloCategoriaById(Long id) {
         if (Objects.nonNull(id)) {
             Arrays.stream(values())
                     .filter(categoriaEnum -> categoriaEnum.getId().equals(id))
-                    .map(CategoriaEnum::getNome);
+                    .map(CategoriaEnum::getTitulo);
         }
         return Optional.empty();
     }

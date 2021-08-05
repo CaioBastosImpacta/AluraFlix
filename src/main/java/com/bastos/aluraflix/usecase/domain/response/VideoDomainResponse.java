@@ -1,10 +1,12 @@
 package com.bastos.aluraflix.usecase.domain.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VideoDomainResponse {

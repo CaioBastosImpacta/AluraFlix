@@ -84,10 +84,12 @@ public class HandlerControllerAdviceException extends ResponseEntityExceptionHan
             campoMensagemErrorModelResponses.add(campoMensagemErrorModelResponse);
         });
 
-        mensagemErrorModelResponse.setCodigo(String.valueOf(HttpStatus.BAD_REQUEST.value()));
-        mensagemErrorModelResponse.setMensagem("Houve um erro no momento da requisição, é necessário corrigir.");
-        mensagemErrorModelResponse.setUrlErro(UrlErroEnum.buscaUrl(HttpStatus.BAD_REQUEST.value()));
-        mensagemErrorModelResponse.setCampos(campoMensagemErrorModelResponses);
+        mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
+                .codigo(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                .mensagem("Houve um erro no momento da requisição, é necessário corrigir.")
+                .urlErro(UrlErroEnum.buscaUrl(HttpStatus.BAD_REQUEST.value()))
+                .campos(campoMensagemErrorModelResponses)
+                .build();
 
         return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.BAD_REQUEST);
     }

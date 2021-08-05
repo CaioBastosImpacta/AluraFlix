@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaController {
 
-    CategoriaService categoriaService;
-    DataModelMapper dataModelMapper;
+    private final CategoriaService categoriaService;
+    private final DataModelMapper dataModelMapper;
 
     @GetMapping
     public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getAll() {

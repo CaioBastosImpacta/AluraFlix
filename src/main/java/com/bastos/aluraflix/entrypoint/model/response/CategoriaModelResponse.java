@@ -15,7 +15,6 @@ import java.util.List;
 public class CategoriaModelResponse {
 
     private Long id;
-    private String nome;
     private String titulo;
     private String cor;
     private List<VideoModelResponse> videos;

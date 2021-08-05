@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class CategoriaDomainRequest {
 
     private Long id;
-    private String nome;
     private String titulo;
     private String cor;
 }

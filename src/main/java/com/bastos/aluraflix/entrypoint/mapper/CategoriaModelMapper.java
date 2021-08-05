@@ -18,7 +18,6 @@ public class CategoriaModelMapper {
         return categoriasDomainResponse.stream()
                 .map(categoriaDomainResponse -> CategoriaModelResponse.builder()
                         .id(categoriaDomainResponse.getId())
-                        .nome(categoriaDomainResponse.getNome())
                         .titulo(categoriaDomainResponse.getTitulo())
                         .cor(categoriaDomainResponse.getCor())
                         .build()).collect(Collectors.toList());
@@ -27,7 +26,6 @@ public class CategoriaModelMapper {
     public static CategoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {
         return CategoriaModelResponse.builder()
                 .id(categoriaDomainResponse.getId())
-                .nome(categoriaDomainResponse.getNome())
                 .titulo(categoriaDomainResponse.getTitulo())
                 .cor(categoriaDomainResponse.getCor())
                 .videos(toModelResponseVideo(categoriaDomainResponse))

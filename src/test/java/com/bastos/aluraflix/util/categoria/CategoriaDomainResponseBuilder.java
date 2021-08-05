@@ -8,18 +8,12 @@ import java.util.List;
 public class CategoriaDomainResponseBuilder {
 
     private Long id;
-    private String nome;
     private String titulo;
     private String cor;
     private List<VideoDomainResponse> videos;
 
     public CategoriaDomainResponseBuilder comId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public CategoriaDomainResponseBuilder comNome(String nome) {
-        this.nome = nome;
         return this;
     }
 
@@ -39,7 +33,7 @@ public class CategoriaDomainResponseBuilder {
     }
 
     public CategoriaDomainResponse criar() {
-        return new CategoriaDomainResponse(id, nome, titulo, cor, videos);
+        return new CategoriaDomainResponse(id, titulo, cor, videos);
     }
 }
 

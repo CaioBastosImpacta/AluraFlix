@@ -5,17 +5,11 @@ import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 public class CategoriaDomainRequestBuilder {
 
     private Long id;
-    private String nome;
     private String titulo;
     private String cor;
 
     public CategoriaDomainRequestBuilder comId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public CategoriaDomainRequestBuilder comNome(String nome) {
-        this.nome = nome;
         return this;
     }
 
@@ -30,7 +24,7 @@ public class CategoriaDomainRequestBuilder {
     }
 
     public CategoriaDomainRequest criar() {
-        return new CategoriaDomainRequest(id, nome, titulo, cor);
+        return new CategoriaDomainRequest(id, titulo, cor);
     }
 }
 

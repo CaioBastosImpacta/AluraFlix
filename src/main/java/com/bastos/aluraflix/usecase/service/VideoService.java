@@ -46,15 +46,21 @@ public class VideoService {
         VideoDomainResponse videoDomainResponse = getByIdVideo(id);
 
         if (Objects.nonNull(videoDomainRequest.getTitulo())) {
-            videoDomainResponse.setTitulo(videoDomainRequest.getTitulo());
+            videoDomainResponse = VideoDomainResponse.builder()
+                    .titulo(videoDomainRequest.getTitulo())
+                    .build();
         }
 
         if (Objects.nonNull(videoDomainRequest.getDescricao())) {
-            videoDomainResponse.setDescricao(videoDomainRequest.getDescricao());
+            videoDomainResponse = VideoDomainResponse.builder()
+                    .descricao(videoDomainRequest.getDescricao())
+                    .build();
         }
 
         if (Objects.nonNull(videoDomainRequest.getUrl())) {
-            videoDomainResponse.setUrl(videoDomainRequest.getUrl());
+            videoDomainResponse = VideoDomainResponse.builder()
+                    .url(videoDomainRequest.getUrl())
+                    .build();
         }
         
         return videoGateway.update(videoDomainResponse);

@@ -30,6 +30,7 @@ public class VideoMapperDomain {
         if (Objects.nonNull(videoEntity.getCategoria())) {
             return CategoriaDomainResponse.builder()
                     .id(videoEntity.getCategoria().getId())
+                    .titulo(videoEntity.getCategoria().getTitulo())
                     .build();
         }
 

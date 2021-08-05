@@ -23,8 +23,8 @@ import java.util.List;
 @RequestMapping(value = "/videos")
 public class VideoController {
 
-    VideoService videoService;
-    DataModelMapper dataModelMapper;
+    private final VideoService videoService;
+    private final DataModelMapper dataModelMapper;
 
     @GetMapping
     public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll(String search) {
