@@ -4,18 +4,25 @@ import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.util.categoria.CategoriaMock;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(SpringExtension.class)
 public class CategoriaModelMapperTest {
+
+    @Spy
+    private CategoriaModelMapper categoriaModelMapper;
 
     @Test
     public void testToModelResponseListSuccess() {
         List<CategoriaModelResponse> categoriaModelResponses =
-                CategoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriasDomainResponse());
+                categoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriasDomainResponse());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), categoriaModelResponses.get(0).getId()),
@@ -31,7 +38,7 @@ public class CategoriaModelMapperTest {
     @Test
     public void testToModelResponseSuccess() {
         CategoriaModelResponse categoriaModelResponse =
-                CategoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriaDomainResponse());
+                categoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriaDomainResponse());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(2), categoriaModelResponse.getId()),
@@ -52,7 +59,7 @@ public class CategoriaModelMapperTest {
     @Test
     public void testToModelResponseWhenVideoEmptyList() {
         CategoriaModelResponse categoriaModelResponse =
-                CategoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriaDomainResponseWhenVideoEmptyList());
+                categoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriaDomainResponseWhenVideoEmptyList());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(2), categoriaModelResponse.getId()),
@@ -65,7 +72,7 @@ public class CategoriaModelMapperTest {
     @Test
     public void testToDomainRequestSaveSuccess() {
         CategoriaDomainRequest categoriaDomainRequest =
-                CategoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequest());
+                categoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequest());
 
         assertAll(
                 () -> assertEquals("LIVRE", categoriaDomainRequest.getTitulo()),
@@ -76,7 +83,7 @@ public class CategoriaModelMapperTest {
     @Test
     public void testToDomainRequestUpdateSuccess() {
         CategoriaDomainRequest categoriaDomainRequest =
-                CategoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequestPartial());
+                categoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequestPartial());
 
         assertAll(
                 () -> assertEquals("LIVRE", categoriaDomainRequest.getTitulo()),

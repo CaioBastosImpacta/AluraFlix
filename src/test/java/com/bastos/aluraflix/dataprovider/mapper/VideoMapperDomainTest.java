@@ -4,16 +4,23 @@ import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.util.video.VideoMock;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(SpringExtension.class)
 public class VideoMapperDomainTest {
+
+    @Spy
+    private VideoMapperDomain videoMapperDomain;
 
     @Test
     public void testToDomainListSuccess() {
-        List<VideoDomainResponse> videoDomainResponses = VideoMapperDomain.toDomain(VideoMock.mockBuilderVideosEntity());
+        List<VideoDomainResponse> videoDomainResponses = videoMapperDomain.toDomain(VideoMock.mockBuilderVideosEntity());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), videoDomainResponses.get(0).getId()),
@@ -33,7 +40,7 @@ public class VideoMapperDomainTest {
     @Test
     public void testToDomainListWhenCategoriaNullSuccess() {
         List<VideoDomainResponse> videoDomainResponses =
-                VideoMapperDomain.toDomain(VideoMock.mockBuilderVideosEntityWhenCategoriaNull());
+                videoMapperDomain.toDomain(VideoMock.mockBuilderVideosEntityWhenCategoriaNull());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), videoDomainResponses.get(0).getId()),
@@ -46,7 +53,7 @@ public class VideoMapperDomainTest {
 
     @Test
     public void testToDomainSuccess() {
-        VideoDomainResponse videoDomainResponse = VideoMapperDomain.toDomain(VideoMock.mockBuilderVideoEntity());
+        VideoDomainResponse videoDomainResponse = videoMapperDomain.toDomain(VideoMock.mockBuilderVideoEntity());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), videoDomainResponse.getId()),
@@ -59,7 +66,7 @@ public class VideoMapperDomainTest {
 
     @Test
     public void testToEntitySaveSuccess() {
-        VideoEntity videoEntity = VideoMapperDomain.toEntity(VideoMock.mockBuilderVideoDomainRequest());
+        VideoEntity videoEntity = videoMapperDomain.toEntity(VideoMock.mockBuilderVideoDomainRequest());
 
         assertAll(
                 () -> assertEquals("Homem de Ferro", videoEntity.getTitulo()),
@@ -71,7 +78,7 @@ public class VideoMapperDomainTest {
 
     @Test
     public void testToEntityUpdateSuccess() {
-        VideoEntity videoEntity = VideoMapperDomain.toEntity(VideoMock.mockBuilderVideoDomainResponse());
+        VideoEntity videoEntity = videoMapperDomain.toEntity(VideoMock.mockBuilderVideoDomainResponse());
 
         assertAll(
                 () -> assertEquals(Long.valueOf(1), videoEntity.getId()),

@@ -18,14 +18,14 @@ import java.util.List;
 @Component
 public class VideoImplementation implements VideoGateway {
 
-    VideoRepository videoRepository;
-
+    private final VideoRepository videoRepository;
+    private final VideoMapperDomain videoMapperDomain;
     @Override
     public List<VideoDomainResponse> getAll() {
         List<VideoEntity> videosEntities = videoRepository.findAll();
         validaRetornoListaVazia(videosEntities);
 
-        return VideoMapperDomain.toDomain(videosEntities);
+        return videoMapperDomain.toDomain(videosEntities);
     }
 
     @Override
@@ -34,25 +34,25 @@ public class VideoImplementation implements VideoGateway {
                 .orElseThrow(() -> new RegistradoNaoEncontradoException(
                         String.format("O video com o código '%s' não foi encontrado, nos registros.", id)));
 
-        return VideoMapperDomain.toDomain(videoEntity);
+        return videoMapperDomain.toDomain(videoEntity);
     }
 
     @Transactional
     @Override
     public VideoDomainResponse save(VideoDomainRequest videoDomainRequest) {
-        VideoEntity videoEntityRequest = VideoMapperDomain.toEntity(videoDomainRequest);
+        VideoEntity videoEntityRequest = videoMapperDomain.toEntity(videoDomainRequest);
         VideoEntity videoEntity = videoRepository.save(videoEntityRequest);
 
-        return VideoMapperDomain.toDomain(videoEntity);
+        return videoMapperDomain.toDomain(videoEntity);
     }
 
     @Transactional
     @Override
     public VideoDomainResponse update(VideoDomainResponse videoDomainResponse) {
-        VideoEntity videoEntityRequest = VideoMapperDomain.toEntity(videoDomainResponse);
+        VideoEntity videoEntityRequest = videoMapperDomain.toEntity(videoDomainResponse);
         VideoEntity videoEntity = videoRepository.save(videoEntityRequest);
 
-        return VideoMapperDomain.toDomain(videoEntity);
+        return videoMapperDomain.toDomain(videoEntity);
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class VideoImplementation implements VideoGateway {
                 .orElseThrow(() -> new RegistradoNaoEncontradoException(
                         String.format("Não existe video relacionado a categoria '%s'.", id)));
 
-        return VideoMapperDomain.toDomain(videoEntities);
+        return videoMapperDomain.toDomain(videoEntities);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class VideoImplementation implements VideoGateway {
         List<VideoEntity> videoEntities = videoRepository.findByTituloContains(search);
         validaRetornoListaVazia(videoEntities);
 
-        return VideoMapperDomain.toDomain(videoEntities);
+        return videoMapperDomain.toDomain(videoEntities);
     }
 
     private void validaRetornoListaVazia(List<VideoEntity> videoEntities) {

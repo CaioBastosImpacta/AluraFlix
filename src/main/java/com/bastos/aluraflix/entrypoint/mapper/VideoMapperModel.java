@@ -8,14 +8,16 @@ import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Component
 public class VideoMapperModel {
 
-    public static List<VideoModelResponse> toModelResponse(List<VideoDomainResponse> videosDomainsResponses) {
+    public List<VideoModelResponse> toModelResponse(List<VideoDomainResponse> videosDomainsResponses) {
         return videosDomainsResponses.stream()
                 .map(videoDomainResponse ->
                         VideoModelResponse.builder()
@@ -28,8 +30,8 @@ public class VideoMapperModel {
                 ).collect(Collectors.toList());
     }
 
-    private static CategoriaModelResponse toModelResponseCategoria(VideoDomainResponse videoDomainResponse) {
-        if (Objects.nonNull(videoDomainResponse)) {
+    private CategoriaModelResponse toModelResponseCategoria(VideoDomainResponse videoDomainResponse) {
+        if (Objects.nonNull(videoDomainResponse.getCategoria())) {
             return CategoriaModelResponse.builder()
                     .id(videoDomainResponse.getCategoria().getId())
                     .build();
@@ -38,7 +40,7 @@ public class VideoMapperModel {
         return CategoriaModelResponse.builder().build();
     }
 
-    public static VideoModelResponse toModelResponse(VideoDomainResponse videoDomainResponse) {
+    public VideoModelResponse toModelResponse(VideoDomainResponse videoDomainResponse) {
         return VideoModelResponse.builder()
                 .id(videoDomainResponse.getId())
                 .titulo(videoDomainResponse.getTitulo())
@@ -48,7 +50,7 @@ public class VideoMapperModel {
                 .build();
     }
 
-    public static VideoDomainRequest toDomain(VideoModelRequest videoModelRequest) {
+    public VideoDomainRequest toDomain(VideoModelRequest videoModelRequest) {
         return VideoDomainRequest.builder()
                 .titulo(videoModelRequest.getTitulo())
                 .descricao(videoModelRequest.getDescricao())
@@ -57,13 +59,13 @@ public class VideoMapperModel {
                 .build();
     }
 
-    private static CategoriaDomainRequest toDomainCategoria(CategoriaModelRequest categoria) {
+    private CategoriaDomainRequest toDomainCategoria(CategoriaModelRequest categoria) {
         return CategoriaDomainRequest.builder()
                 .id(categoria.getId())
                 .build();
     }
 
-    public static VideoDomainRequest toDomain(VideoPartialModelRequest videoPartialModelRequest) {
+    public VideoDomainRequest toDomain(VideoPartialModelRequest videoPartialModelRequest) {
         return VideoDomainRequest.builder()
                 .titulo(videoPartialModelRequest.getTitulo())
                 .descricao(videoPartialModelRequest.getDescricao())

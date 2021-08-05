@@ -1,6 +1,8 @@
 package com.bastos.aluraflix.util.video;
 
 import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
+import com.bastos.aluraflix.entrypoint.model.request.VideoModelRequest;
+import com.bastos.aluraflix.entrypoint.model.request.VideoPartialModelRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.util.categoria.CategoriaMock;
@@ -76,7 +78,7 @@ public class VideoMock {
                         .comTitulo("Homem de Ferro")
                         .comDescricao("Filme numero 1")
                         .comUrl("/homem-de-ferro")
-                        .comCategoria(CategoriaMock.mockBuilderCategoriaDomainResponse())
+                        .comCategoria(CategoriaMock.mockBuilderCategoriaDomainResponseWhenVideoEmptyList())
                         .criar();
 
         return videoDomainResponse;
@@ -89,6 +91,7 @@ public class VideoMock {
                         .comTitulo("Homem de Ferro")
                         .comDescricao("Filme numero 1")
                         .comUrl("/homem-de-ferro")
+                        .comCategoria(CategoriaMock.mockBuilderCategoriaDomainResponseWhenVideoEmptyList())
                         .criar();
 
         VideoDomainResponse videoDomainResponse2 =
@@ -97,8 +100,54 @@ public class VideoMock {
                         .comTitulo("Homem de Ferro 2")
                         .comDescricao("Filme numero 2")
                         .comUrl("/homem-de-ferro-2")
+                        .comCategoria(CategoriaMock.mockBuilderCategoriaDomainResponseWhenVideoEmptyList())
                         .criar();
 
         return List.of(videoDomainResponse, videoDomainResponse2);
+    }
+
+    public static List<VideoDomainResponse> mockBuilderVideosDomainResponseCategoriaIsNull() {
+        VideoDomainResponse videoDomainResponse =
+                new VideoDomainResponseBuilder()
+                        .comId(Long.valueOf(1))
+                        .comTitulo("Homem de Ferro")
+                        .comDescricao("Filme numero 1")
+                        .comUrl("/homem-de-ferro")
+                        .comCategoria(null)
+                        .criar();
+
+        VideoDomainResponse videoDomainResponse2 =
+                new VideoDomainResponseBuilder()
+                        .comId(Long.valueOf(2))
+                        .comTitulo("Homem de Ferro 2")
+                        .comDescricao("Filme numero 2")
+                        .comUrl("/homem-de-ferro-2")
+                        .comCategoria(null)
+                        .criar();
+
+        return List.of(videoDomainResponse, videoDomainResponse2);
+    }
+
+    public static VideoModelRequest mockBuilderVideoModelRequest() {
+        VideoModelRequest videoModelRequest =
+                new VideoModelRequestBuilder()
+                        .comTitulo("Homem de Ferro")
+                        .comDescricao("Filme 1")
+                        .comUrl("/homem-de-ferro")
+                        .comCategoria(CategoriaMock.mockBuilderCategoriasModelRequest())
+                        .criar();
+
+        return videoModelRequest;
+    }
+
+    public static VideoPartialModelRequest mockBuilderVideoPartialModelRequest() {
+        VideoPartialModelRequest videoPartialModelRequest =
+                new VideoPartialModelRequestBuilder()
+                        .comTitulo("Homem de Ferro")
+                        .comDescricao("Filme 1")
+                        .comUrl("/homem-de-ferro")
+                        .criar();
+
+        return videoPartialModelRequest;
     }
 }

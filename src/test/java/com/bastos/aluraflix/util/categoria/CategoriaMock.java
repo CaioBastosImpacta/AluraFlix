@@ -108,6 +108,7 @@ public class CategoriaMock {
     public static CategoriaModelRequest mockBuilderCategoriasModelRequest() {
         CategoriaModelRequest categoriaModelRequest =
                 new CategoriaModelRequestBuilder()
+                        .comId(Long.valueOf(1))
                         .comTitulo("LIVRE")
                         .comCor("verde")
                         .criar();

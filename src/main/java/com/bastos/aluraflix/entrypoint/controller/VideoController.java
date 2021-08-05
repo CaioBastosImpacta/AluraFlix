@@ -24,13 +24,14 @@ import java.util.List;
 public class VideoController {
 
     private final VideoService videoService;
+    private final VideoMapperModel videoMapperModel;
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
     public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll(String search) {
 
         List<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search);
-        List<VideoModelResponse> videosModelsResponses = VideoMapperModel.toModelResponse(videosDomainsResponses);
+        List<VideoModelResponse> videosModelsResponses = videoMapperModel.toModelResponse(videosDomainsResponses);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videosModelsResponses);
 
         return ResponseEntity.ok(dataModelResponseVideo);
@@ -40,7 +41,7 @@ public class VideoController {
     public ResponseEntity<DataModelResponse<VideoModelResponse>> getById(@PathVariable Long id) {
 
         VideoDomainResponse videoDomainResponse = videoService.getByIdVideo(id);
-        VideoModelResponse videoModelResponse = VideoMapperModel.toModelResponse(videoDomainResponse);
+        VideoModelResponse videoModelResponse = videoMapperModel.toModelResponse(videoDomainResponse);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
 
         return ResponseEntity.ok(dataModelResponseVideo);
@@ -50,9 +51,9 @@ public class VideoController {
     public ResponseEntity<DataModelResponse<VideoModelResponse>> save(@RequestBody @Validated VideoModelRequest videoModelRequest) {
 
         VideoValidation.validate(videoModelRequest);
-        VideoDomainRequest videoDomainRequest = VideoMapperModel.toDomain(videoModelRequest);
+        VideoDomainRequest videoDomainRequest = videoMapperModel.toDomain(videoModelRequest);
         VideoDomainResponse videoDomainResponse = videoService.save(videoDomainRequest);
-        VideoModelResponse videoModelResponse = VideoMapperModel.toModelResponse(videoDomainResponse);
+        VideoModelResponse videoModelResponse = videoMapperModel.toModelResponse(videoDomainResponse);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
 
         return new ResponseEntity<>(dataModelResponseVideo, HttpStatus.CREATED);
@@ -62,9 +63,9 @@ public class VideoController {
     public ResponseEntity<DataModelResponse<VideoModelResponse>> updatePartial(@PathVariable Long id,
                                                                                @RequestBody VideoPartialModelRequest videoPartialModelRequest) {
 
-        VideoDomainRequest videoDomainRequest = VideoMapperModel.toDomain(videoPartialModelRequest);
+        VideoDomainRequest videoDomainRequest = videoMapperModel.toDomain(videoPartialModelRequest);
         VideoDomainResponse videoDomainResponse = videoService.update(id, videoDomainRequest);
-        VideoModelResponse videoModelResponse = VideoMapperModel.toModelResponse(videoDomainResponse);
+        VideoModelResponse videoModelResponse = videoMapperModel.toModelResponse(videoDomainResponse);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
 
         return ResponseEntity.ok(dataModelResponseVideo);

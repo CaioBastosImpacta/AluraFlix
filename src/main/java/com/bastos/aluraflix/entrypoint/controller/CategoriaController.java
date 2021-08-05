@@ -23,13 +23,14 @@ import java.util.List;
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
+    private final CategoriaModelMapper categoriaModelMapper;
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
     public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getAll() {
 
         List<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias();
-        List<CategoriaModelResponse> categoriasModelResponses = CategoriaModelMapper.toModelResponse(categoriasDomainResponse);
+        List<CategoriaModelResponse> categoriasModelResponses = categoriaModelMapper.toModelResponse(categoriasDomainResponse);
         DataModelResponse dataModelResponseCategoria = dataModelMapper.setDataModel(categoriasModelResponses);
 
         return ResponseEntity.ok(dataModelResponseCategoria);
@@ -39,7 +40,7 @@ public class CategoriaController {
     public ResponseEntity<DataModelResponse<CategoriaModelResponse>> getById(@PathVariable Long id) {
 
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.getByIdCategoria(id);
-        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = categoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);
@@ -49,7 +50,7 @@ public class CategoriaController {
     public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getByIdCategoriaVideo(@PathVariable Long id) {
 
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.getByIdCategoriaVideo(id);
-        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = categoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);
@@ -58,9 +59,9 @@ public class CategoriaController {
     @PostMapping
     public ResponseEntity<DataModelResponse<CategoriaModelResponse>> save(@RequestBody @Validated CategoriaModelRequest categoriaModelRequest) {
 
-        CategoriaDomainRequest categoriaDomainRequest = CategoriaModelMapper.toDomain(categoriaModelRequest);
+        CategoriaDomainRequest categoriaDomainRequest = categoriaModelMapper.toDomain(categoriaModelRequest);
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.save(categoriaDomainRequest);
-        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = categoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return new ResponseEntity<>(dataModelResponse, HttpStatus.CREATED);
@@ -70,9 +71,9 @@ public class CategoriaController {
     public ResponseEntity<DataModelResponse<CategoriaModelResponse>> updatePartial(@PathVariable Long id,
                                                                                    @RequestBody CategoriaPartialModelRequest categoriaPartialModelRequest) {
 
-        CategoriaDomainRequest categoriaDomainRequest = CategoriaModelMapper.toDomain(categoriaPartialModelRequest);
+        CategoriaDomainRequest categoriaDomainRequest = categoriaModelMapper.toDomain(categoriaPartialModelRequest);
         CategoriaDomainResponse categoriaDomainResponse = categoriaService.update(id, categoriaDomainRequest);
-        CategoriaModelResponse categetoriaModelResponse = CategoriaModelMapper.toModelResponse(categoriaDomainResponse);
+        CategoriaModelResponse categetoriaModelResponse = categoriaModelMapper.toModelResponse(categoriaDomainResponse);
         DataModelResponse dataModelResponse = dataModelMapper.setDataModel(categetoriaModelResponse);
 
         return ResponseEntity.ok(dataModelResponse);

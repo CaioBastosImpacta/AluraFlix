@@ -19,6 +19,7 @@ import java.util.List;
 public class CategoriaImplementation implements CategoriaGateway {
 
     private final CategoriaRepository categoriaRepository;
+    private final CategoriaDomainMapper categoriaDomainMapper;
 
     @Override
     public List<CategoriaDomainResponse> getAll() {
@@ -28,7 +29,7 @@ public class CategoriaImplementation implements CategoriaGateway {
             throw new NenhumConteudoException();
         }
 
-        return CategoriaDomainMapper.toDomain(categoriaEntities);
+        return categoriaDomainMapper.toDomain(categoriaEntities);
     }
 
     @Override
@@ -37,25 +38,25 @@ public class CategoriaImplementation implements CategoriaGateway {
                 .orElseThrow(() -> new RegistradoNaoEncontradoException(
                         String.format("A categoria com o código '%s' não foi encontrado, nos registros", id)));
 
-        return CategoriaDomainMapper.toDomain(categoriaEntity);
+        return categoriaDomainMapper.toDomain(categoriaEntity);
     }
 
     @Transactional
     @Override
     public CategoriaDomainResponse save(CategoriaDomainRequest categoriaDomainRequest) {
-        CategoriaEntity categoriaEntityRequest = CategoriaDomainMapper.toEntity(categoriaDomainRequest);
+        CategoriaEntity categoriaEntityRequest = categoriaDomainMapper.toEntity(categoriaDomainRequest);
         CategoriaEntity categoriaEntity = categoriaRepository.save(categoriaEntityRequest);
 
-        return CategoriaDomainMapper.toDomain(categoriaEntity);
+        return categoriaDomainMapper.toDomain(categoriaEntity);
     }
 
     @Transactional
     @Override
     public CategoriaDomainResponse update(CategoriaDomainResponse categoriaDomainResponse) {
-        CategoriaEntity categoriaEntityRequest = CategoriaDomainMapper.toEntity(categoriaDomainResponse);
+        CategoriaEntity categoriaEntityRequest = categoriaDomainMapper.toEntity(categoriaDomainResponse);
         CategoriaEntity categoriaEntity = categoriaRepository.save(categoriaEntityRequest);
 
-        return CategoriaDomainMapper.toDomain(categoriaEntity);
+        return categoriaDomainMapper.toDomain(categoriaEntity);
     }
 
     @Transactional

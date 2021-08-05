@@ -7,14 +7,16 @@ import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
 import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CategoriaModelMapper {
 
-    public static List<CategoriaModelResponse> toModelResponse(List<CategoriaDomainResponse> categoriasDomainResponse) {
+    public List<CategoriaModelResponse> toModelResponse(List<CategoriaDomainResponse> categoriasDomainResponse) {
         return categoriasDomainResponse.stream()
                 .map(categoriaDomainResponse -> CategoriaModelResponse.builder()
                         .id(categoriaDomainResponse.getId())
@@ -23,7 +25,7 @@ public class CategoriaModelMapper {
                         .build()).collect(Collectors.toList());
     }
 
-    public static CategoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {
+    public CategoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {
         return CategoriaModelResponse.builder()
                 .id(categoriaDomainResponse.getId())
                 .titulo(categoriaDomainResponse.getTitulo())
@@ -32,7 +34,7 @@ public class CategoriaModelMapper {
                 .build();
     }
 
-    private static List<VideoModelResponse> toModelResponseVideo(CategoriaDomainResponse categoriaDomainResponse) {
+    private List<VideoModelResponse> toModelResponseVideo(CategoriaDomainResponse categoriaDomainResponse) {
         if (CollectionUtils.isEmpty(categoriaDomainResponse.getVideos())) {
             return Collections.emptyList();
         }
@@ -46,14 +48,14 @@ public class CategoriaModelMapper {
                         .build()).collect(Collectors.toList());
     }
 
-    public static CategoriaDomainRequest toDomain(CategoriaModelRequest categoriaModelRequest) {
+    public CategoriaDomainRequest toDomain(CategoriaModelRequest categoriaModelRequest) {
         return CategoriaDomainRequest.builder()
                 .titulo(categoriaModelRequest.getTitulo())
                 .cor(categoriaModelRequest.getCor())
                 .build();
     }
 
-    public static CategoriaDomainRequest toDomain(CategoriaPartialModelRequest categoriaPartialModelRequest) {
+    public CategoriaDomainRequest toDomain(CategoriaPartialModelRequest categoriaPartialModelRequest) {
         return CategoriaDomainRequest.builder()
                 .titulo(categoriaPartialModelRequest.getTitulo())
                 .cor(categoriaPartialModelRequest.getCor())
