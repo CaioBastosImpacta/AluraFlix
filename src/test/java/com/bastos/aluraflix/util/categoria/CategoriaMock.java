@@ -1,6 +1,8 @@
 package com.bastos.aluraflix.util.categoria;
 
 import com.bastos.aluraflix.dataprovider.repository.entity.CategoriaEntity;
+import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
+import com.bastos.aluraflix.entrypoint.model.request.CategoriaPartialModelRequest;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.util.video.VideoMock;
@@ -100,5 +102,26 @@ public class CategoriaMock {
                         .criar();
 
         return List.of(categoriaDomainResponse, categoriaDomainResponse1);
+    }
+
+
+    public static CategoriaModelRequest mockBuilderCategoriasModelRequest() {
+        CategoriaModelRequest categoriaModelRequest =
+                new CategoriaModelRequestBuilder()
+                        .comTitulo("LIVRE")
+                        .comCor("verde")
+                        .criar();
+
+        return categoriaModelRequest;
+    }
+
+    public static CategoriaPartialModelRequest mockBuilderCategoriasModelRequestPartial() {
+        CategoriaPartialModelRequest categoriaPartialModelRequest =
+                new CategoriaModelRequestPartialBuilder()
+                        .comTitulo("LIVRE")
+                        .comCor("verde")
+                        .criar();
+
+        return categoriaPartialModelRequest;
     }
 }

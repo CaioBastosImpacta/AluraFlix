@@ -61,4 +61,26 @@ public class CategoriaModelMapperTest {
                 () -> assertEquals(0, categoriaModelResponse.getVideos().size())
         );
     }
+
+    @Test
+    public void testToDomainRequestSaveSuccess() {
+        CategoriaDomainRequest categoriaDomainRequest =
+                CategoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequest());
+
+        assertAll(
+                () -> assertEquals("LIVRE", categoriaDomainRequest.getTitulo()),
+                () -> assertEquals("verde", categoriaDomainRequest.getCor())
+        );
+    }
+
+    @Test
+    public void testToDomainRequestUpdateSuccess() {
+        CategoriaDomainRequest categoriaDomainRequest =
+                CategoriaModelMapper.toDomain(CategoriaMock.mockBuilderCategoriasModelRequestPartial());
+
+        assertAll(
+                () -> assertEquals("LIVRE", categoriaDomainRequest.getTitulo()),
+                () -> assertEquals("verde", categoriaDomainRequest.getCor())
+        );
+    }
 }
