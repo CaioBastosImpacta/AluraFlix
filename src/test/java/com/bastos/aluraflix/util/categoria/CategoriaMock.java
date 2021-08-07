@@ -52,6 +52,16 @@ public class CategoriaMock {
         return categoriaDomainRequest;
     }
 
+    public static CategoriaDomainRequest mockBuilderCategoriaDomainRequestSave() {
+        CategoriaDomainRequest categoriaDomainRequest =
+                new CategoriaDomainRequestBuilder()
+                        .comTitulo("LIVRE")
+                        .comCor("verde")
+                        .criar();
+
+        return categoriaDomainRequest;
+    }
+
     public static CategoriaDomainRequest mockBuilderCategoriaDomainRequestWhenTituloNull() {
         CategoriaDomainRequest categoriaDomainRequest =
                 new CategoriaDomainRequestBuilder()
