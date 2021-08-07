@@ -9,6 +9,7 @@ import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.service.enums.CategoriaEnum;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class CategoriaService {
     private final CategoriaGateway categoriaGateway;
     private final VideoService videoService;
 
+    @Cacheable(value = "listaCategorias")
     public Page<CategoriaDomainResponse> getAllCategorias(Pageable pageable) {
         return categoriaGateway.getAll(pageable);
     }
