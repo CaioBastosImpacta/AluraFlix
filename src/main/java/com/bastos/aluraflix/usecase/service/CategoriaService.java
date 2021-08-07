@@ -1,8 +1,8 @@
 package com.bastos.aluraflix.usecase.service;
 
+import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
-import com.bastos.aluraflix.exception.ErroInternoServidor;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
@@ -10,8 +10,7 @@ import com.bastos.aluraflix.usecase.service.enums.CategoriaEnum;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +24,8 @@ public class CategoriaService {
     private final CategoriaGateway categoriaGateway;
     private final VideoService videoService;
 
-    public Page<CategoriaDomainResponse> getAllCategorias(Integer page, Integer linesPerPage, String direction, String orderBy) {
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-
-        return categoriaGateway.getAll(pageRequest);
+    public Page<CategoriaDomainResponse> getAllCategorias(Pageable pageable) {
+        return categoriaGateway.getAll(pageable);
     }
 
     public CategoriaDomainResponse getByIdCategoria(Long id) {

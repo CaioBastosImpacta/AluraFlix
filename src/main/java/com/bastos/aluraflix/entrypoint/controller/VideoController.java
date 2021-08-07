@@ -12,12 +12,13 @@ import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.service.VideoService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -29,13 +30,10 @@ public class VideoController {
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<Page<VideoModelResponse>>> getAll(@RequestParam(value="search", required = false) String search,
-                                                                              @RequestParam(value="page", defaultValue="0", required = false) Integer page,
-                                                                              @RequestParam(value="linesPerPage", defaultValue="5", required = false) Integer linesPerPage,
-                                                                              @RequestParam(value="direction", defaultValue="ASC", required = false) String direction,
-                                                                              @RequestParam(value="orderBy", defaultValue="titulo", required = false) String orderBy) {
+    public ResponseEntity<DataModelResponse<Page<VideoModelResponse>>> getAll(@RequestParam(required = false) String search,
+                    @PageableDefault(page = 0, size = 5, sort = "titulo", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        Page<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search, page, linesPerPage, direction, orderBy);
+        Page<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search, pageable);
         Page<VideoModelResponse> videosModelsResponses = videoMapperModel.toModelResponse(videosDomainsResponses);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videosModelsResponses);
 

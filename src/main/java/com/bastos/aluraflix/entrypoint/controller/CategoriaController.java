@@ -11,6 +11,9 @@ import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.service.CategoriaService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,12 +31,10 @@ public class CategoriaController {
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<Page<CategoriaModelResponse>>> getAll(@RequestParam(value="page", defaultValue="0", required = false) Integer page,
-                                                                                  @RequestParam(value="linesPerPage", defaultValue="5", required = false) Integer linesPerPage,
-                                                                                  @RequestParam(value="direction", defaultValue="ASC", required = false) String direction,
-                                                                                  @RequestParam(value="orderBy", defaultValue="titulo", required = false) String orderBy) {
+    public ResponseEntity<DataModelResponse<Page<CategoriaModelResponse>>> getAll(@PageableDefault(page = 0, size = 5, sort = "titulo",
+            direction = Sort.Direction.ASC) Pageable pageable)    {
 
-        Page<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias(page, linesPerPage, direction, orderBy);
+        Page<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias(pageable);
         Page<CategoriaModelResponse> categoriasModelResponses = categoriaModelMapper.toModelResponse(categoriasDomainResponse);
         DataModelResponse dataModelResponseCategoria = dataModelMapper.setDataModel(categoriasModelResponses);
 

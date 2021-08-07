@@ -10,7 +10,7 @@ import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -23,7 +23,7 @@ public class VideoImplementation implements VideoGateway {
     private final VideoRepository videoRepository;
     private final VideoMapperDomain videoMapperDomain;
     @Override
-    public Page<VideoDomainResponse> getAll(PageRequest pageRequest) {
+    public Page<VideoDomainResponse> getAll(Pageable pageRequest) {
         Page<VideoEntity> videosEntities = videoRepository.findAll(pageRequest);
         validaRetornoListaVazia(videosEntities);
 
@@ -73,7 +73,7 @@ public class VideoImplementation implements VideoGateway {
     }
 
     @Override
-    public Page<VideoDomainResponse> findByTitulo(String search, PageRequest pageRequest) {
+    public Page<VideoDomainResponse> findByTitulo(String search, Pageable pageRequest) {
         Page<VideoEntity> videoEntities = videoRepository.findByTitulo(search, pageRequest);
         validaRetornoListaVazia(videoEntities);
 

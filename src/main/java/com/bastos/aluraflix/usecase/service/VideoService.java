@@ -8,8 +8,7 @@ import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,14 +21,13 @@ public class VideoService {
     VideoGateway videoGateway;
     CategoriaGateway categoriaGateway;
 
-    public Page<VideoDomainResponse> getAllVideos(String search, Integer page, Integer linesPerPage, String direction, String orderBy) {
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+    public Page<VideoDomainResponse> getAllVideos(String search, Pageable pageable) {
 
         if (StringUtils.isNotBlank(search)) {
-            return videoGateway.findByTitulo(search, pageRequest);
+            return videoGateway.findByTitulo(search, pageable);
         }
 
-        return videoGateway.getAll(pageRequest);
+        return videoGateway.getAll(pageable);
     }
 
     public VideoDomainResponse getByIdVideo(Long id) {
