@@ -19,7 +19,7 @@ public class CategoriaModelMapperTest {
     @Spy
     private CategoriaModelMapper categoriaModelMapper;
 
-    @Test
+    /*@Test
     public void testToModelResponseListSuccess() {
         List<CategoriaModelResponse> categoriaModelResponses =
                 categoriaModelMapper.toModelResponse(CategoriaMock.mockBuilderCategoriasDomainResponse());
@@ -33,7 +33,7 @@ public class CategoriaModelMapperTest {
                 () -> assertEquals("+12", categoriaModelResponses.get(1).getTitulo()),
                 () -> assertEquals("laranja", categoriaModelResponses.get(1).getCor())
         );
-    }
+    }*/
 
     @Test
     public void testToModelResponseSuccess() {

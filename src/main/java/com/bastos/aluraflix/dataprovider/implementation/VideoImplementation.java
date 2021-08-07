@@ -9,6 +9,8 @@ import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -21,8 +23,8 @@ public class VideoImplementation implements VideoGateway {
     private final VideoRepository videoRepository;
     private final VideoMapperDomain videoMapperDomain;
     @Override
-    public List<VideoDomainResponse> getAll() {
-        List<VideoEntity> videosEntities = videoRepository.findAll();
+    public Page<VideoDomainResponse> getAll(PageRequest pageRequest) {
+        Page<VideoEntity> videosEntities = videoRepository.findAll(pageRequest);
         validaRetornoListaVazia(videosEntities);
 
         return videoMapperDomain.toDomain(videosEntities);
@@ -71,14 +73,14 @@ public class VideoImplementation implements VideoGateway {
     }
 
     @Override
-    public List<VideoDomainResponse> findByTitulo(String search) {
-        List<VideoEntity> videoEntities = videoRepository.findByTituloContains(search);
+    public Page<VideoDomainResponse> findByTitulo(String search, PageRequest pageRequest) {
+        Page<VideoEntity> videoEntities = videoRepository.findByTitulo(search, pageRequest);
         validaRetornoListaVazia(videoEntities);
 
         return videoMapperDomain.toDomain(videoEntities);
     }
 
-    private void validaRetornoListaVazia(List<VideoEntity> videoEntities) {
+    private void validaRetornoListaVazia(Page<VideoEntity> videoEntities) {
         if (videoEntities.isEmpty()) {
             throw new NenhumConteudoException();
         }

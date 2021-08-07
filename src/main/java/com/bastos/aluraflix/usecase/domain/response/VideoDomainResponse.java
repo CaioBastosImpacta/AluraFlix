@@ -1,5 +1,6 @@
 package com.bastos.aluraflix.usecase.domain.response;
 
+import com.bastos.aluraflix.dataprovider.repository.entity.VideoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,4 +17,5 @@ public class VideoDomainResponse {
     private String descricao;
     private String url;
     private CategoriaDomainResponse categoria;
+
 }

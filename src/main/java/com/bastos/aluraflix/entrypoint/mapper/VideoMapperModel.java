@@ -8,17 +8,16 @@ import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 public class VideoMapperModel {
 
-    public List<VideoModelResponse> toModelResponse(List<VideoDomainResponse> videosDomainsResponses) {
-        return videosDomainsResponses.stream()
+    public Page<VideoModelResponse> toModelResponse(Page<VideoDomainResponse> videosDomainsResponses) {
+        return videosDomainsResponses
                 .map(videoDomainResponse ->
                         VideoModelResponse.builder()
                             .id(videoDomainResponse.getId())
@@ -26,8 +25,7 @@ public class VideoMapperModel {
                             .descricao(videoDomainResponse.getDescricao())
                             .url(videoDomainResponse.getUrl())
                             .categoria(toModelResponseCategoria(videoDomainResponse))
-                        .build()
-                ).collect(Collectors.toList());
+                        .build());
     }
 
     private CategoriaModelResponse toModelResponseCategoria(VideoDomainResponse videoDomainResponse) {

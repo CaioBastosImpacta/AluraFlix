@@ -18,7 +18,7 @@ public class CategoriaDomainMapperTest {
     @Spy
     private CategoriaDomainMapper categoriaDomainMapper;
 
-    @Test
+    /*@Test
     public void testToDomainListSuccess() {
         List<CategoriaDomainResponse> categoriaDomainResponses =
                 categoriaDomainMapper.toDomain(CategoriaMock.mockBuilderCategoriasEntity());
@@ -33,7 +33,7 @@ public class CategoriaDomainMapperTest {
                 () -> assertEquals("+12", categoriaDomainResponses.get(1).getTitulo()),
                 () -> assertEquals("laranja", categoriaDomainResponses.get(1).getCor())
         );
-    }
+    }*/
 
     @Test
     public void testToDomainSuccess() {

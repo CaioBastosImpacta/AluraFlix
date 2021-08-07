@@ -1,12 +1,13 @@
 package com.bastos.aluraflix.entrypoint.mapper;
 
+import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
 import com.bastos.aluraflix.entrypoint.model.request.CategoriaPartialModelRequest;
+import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.entrypoint.model.response.VideoModelResponse;
 import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
-import com.bastos.aluraflix.entrypoint.model.request.CategoriaModelRequest;
-import com.bastos.aluraflix.entrypoint.model.response.CategoriaModelResponse;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -16,13 +17,12 @@ import java.util.stream.Collectors;
 @Component
 public class CategoriaModelMapper {
 
-    public List<CategoriaModelResponse> toModelResponse(List<CategoriaDomainResponse> categoriasDomainResponse) {
-        return categoriasDomainResponse.stream()
-                .map(categoriaDomainResponse -> CategoriaModelResponse.builder()
+    public Page<CategoriaModelResponse> toModelResponse(Page<CategoriaDomainResponse> categoriasDomainResponse) {
+        return categoriasDomainResponse.map(categoriaDomainResponse -> CategoriaModelResponse.builder()
                         .id(categoriaDomainResponse.getId())
                         .titulo(categoriaDomainResponse.getTitulo())
                         .cor(categoriaDomainResponse.getCor())
-                        .build()).collect(Collectors.toList());
+                        .build());
     }
 
     public CategoriaModelResponse toModelResponse(CategoriaDomainResponse categoriaDomainResponse) {

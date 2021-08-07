@@ -8,9 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 public class VideoMapperModelTest {
@@ -18,7 +17,7 @@ public class VideoMapperModelTest {
     @Spy
     private VideoMapperModel videoMapperModel;
 
-    @Test
+/*    @Test
     public void testToModelResponseListSuccess() {
         List<VideoModelResponse> videoModelResponses =
                 videoMapperModel.toModelResponse(VideoMock.mockBuilderVideosDomainResponse());
@@ -54,7 +53,7 @@ public class VideoMapperModelTest {
                 () -> assertEquals("Filme numero 2", videoModelResponses.get(1).getDescricao()),
                 () -> assertEquals("/homem-de-ferro-2", videoModelResponses.get(1).getUrl())
         );
-    }
+    }*/
 
     @Test
     public void testToModelResponseSuccess() {

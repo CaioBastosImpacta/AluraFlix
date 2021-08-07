@@ -11,6 +11,7 @@ import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
 import com.bastos.aluraflix.usecase.service.VideoService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,10 +29,14 @@ public class VideoController {
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<List<VideoModelResponse>>> getAll(String search) {
+    public ResponseEntity<DataModelResponse<Page<VideoModelResponse>>> getAll(@RequestParam(value="search", required = false) String search,
+                                                                              @RequestParam(value="page", defaultValue="0", required = false) Integer page,
+                                                                              @RequestParam(value="linesPerPage", defaultValue="5", required = false) Integer linesPerPage,
+                                                                              @RequestParam(value="direction", defaultValue="ASC", required = false) String direction,
+                                                                              @RequestParam(value="orderBy", defaultValue="titulo", required = false) String orderBy) {
 
-        List<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search);
-        List<VideoModelResponse> videosModelsResponses = videoMapperModel.toModelResponse(videosDomainsResponses);
+        Page<VideoDomainResponse> videosDomainsResponses = videoService.getAllVideos(search, page, linesPerPage, direction, orderBy);
+        Page<VideoModelResponse> videosModelsResponses = videoMapperModel.toModelResponse(videosDomainsResponses);
         DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videosModelsResponses);
 
         return ResponseEntity.ok(dataModelResponseVideo);

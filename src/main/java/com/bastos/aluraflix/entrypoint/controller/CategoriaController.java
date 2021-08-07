@@ -10,6 +10,7 @@ import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.service.CategoriaService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,10 +28,13 @@ public class CategoriaController {
     private final DataModelMapper dataModelMapper;
 
     @GetMapping
-    public ResponseEntity<DataModelResponse<List<CategoriaModelResponse>>> getAll() {
+    public ResponseEntity<DataModelResponse<Page<CategoriaModelResponse>>> getAll(@RequestParam(value="page", defaultValue="0", required = false) Integer page,
+                                                                                  @RequestParam(value="linesPerPage", defaultValue="5", required = false) Integer linesPerPage,
+                                                                                  @RequestParam(value="direction", defaultValue="ASC", required = false) String direction,
+                                                                                  @RequestParam(value="orderBy", defaultValue="titulo", required = false) String orderBy) {
 
-        List<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias();
-        List<CategoriaModelResponse> categoriasModelResponses = categoriaModelMapper.toModelResponse(categoriasDomainResponse);
+        Page<CategoriaDomainResponse> categoriasDomainResponse = categoriaService.getAllCategorias(page, linesPerPage, direction, orderBy);
+        Page<CategoriaModelResponse> categoriasModelResponses = categoriaModelMapper.toModelResponse(categoriasDomainResponse);
         DataModelResponse dataModelResponseCategoria = dataModelMapper.setDataModel(categoriasModelResponses);
 
         return ResponseEntity.ok(dataModelResponseCategoria);

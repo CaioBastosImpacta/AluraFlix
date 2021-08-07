@@ -9,6 +9,9 @@ import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.service.enums.CategoriaEnum;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +25,10 @@ public class CategoriaService {
     private final CategoriaGateway categoriaGateway;
     private final VideoService videoService;
 
-    public List<CategoriaDomainResponse> getAllCategorias() {
-        return categoriaGateway.getAll();
+    public Page<CategoriaDomainResponse> getAllCategorias(Integer page, Integer linesPerPage, String direction, String orderBy) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        return categoriaGateway.getAll(pageRequest);
     }
 
     public CategoriaDomainResponse getByIdCategoria(Long id) {

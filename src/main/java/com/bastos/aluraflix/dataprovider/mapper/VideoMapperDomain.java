@@ -6,6 +6,7 @@ import com.bastos.aluraflix.usecase.domain.request.CategoriaDomainRequest;
 import com.bastos.aluraflix.usecase.domain.request.VideoDomainRequest;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.domain.response.VideoDomainResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,16 +16,27 @@ import java.util.stream.Collectors;
 @Component
 public class VideoMapperDomain {
 
+    public Page<VideoDomainResponse> toDomain(Page<VideoEntity> videosEntities) {
+        return videosEntities.map(videoEntity ->
+                        VideoDomainResponse.builder()
+                                .id(videoEntity.getId())
+                                .titulo(videoEntity.getTitulo())
+                                .descricao(videoEntity.getDescricao())
+                                .url(videoEntity.getUrl())
+                                .categoria(toDomainCategoria(videoEntity))
+                                .build());
+    }
+
     public List<VideoDomainResponse> toDomain(List<VideoEntity> videosEntities) {
         return videosEntities.stream()
                 .map(videoEntity ->
                         VideoDomainResponse.builder()
-                            .id(videoEntity.getId())
-                            .titulo(videoEntity.getTitulo())
-                            .descricao(videoEntity.getDescricao())
-                            .url(videoEntity.getUrl())
-                            .categoria(toDomainCategoria(videoEntity))
-                        .build()
+                                .id(videoEntity.getId())
+                                .titulo(videoEntity.getTitulo())
+                                .descricao(videoEntity.getDescricao())
+                                .url(videoEntity.getUrl())
+                                .categoria(toDomainCategoria(videoEntity))
+                                .build()
                 ).collect(Collectors.toList());
     }
 

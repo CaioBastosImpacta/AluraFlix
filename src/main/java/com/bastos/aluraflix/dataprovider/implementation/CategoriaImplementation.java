@@ -9,10 +9,11 @@ import com.bastos.aluraflix.exception.RegistradoNaoEncontradoException;
 import com.bastos.aluraflix.usecase.domain.response.CategoriaDomainResponse;
 import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @AllArgsConstructor
 @Component
@@ -22,8 +23,8 @@ public class CategoriaImplementation implements CategoriaGateway {
     private final CategoriaDomainMapper categoriaDomainMapper;
 
     @Override
-    public List<CategoriaDomainResponse> getAll() {
-        List<CategoriaEntity> categoriaEntities = categoriaRepository.findAll();
+    public Page<CategoriaDomainResponse> getAll(PageRequest pageRequest) {
+        Page<CategoriaEntity> categoriaEntities = categoriaRepository.findAll(pageRequest);
 
         if (categoriaEntities.isEmpty()) {
             throw new NenhumConteudoException();
