@@ -28,6 +28,8 @@ public class UsuarioEntity implements UserDetails {
     private String senha;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private List<PerfilEntity> perfis = new ArrayList<>();
 
     @Override

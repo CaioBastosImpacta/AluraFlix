@@ -94,6 +94,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>aluraflix</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
