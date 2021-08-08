@@ -16,4 +16,5 @@ public interface VideoGateway {
     void deleteById(Long id);
     List<VideoDomainResponse> findByCategoriaId(Long id);
     Page<VideoDomainResponse> findByTitulo(String search, Pageable pageRequest);
+    Page<VideoDomainResponse> getVideoFree(Pageable pageable);
 }

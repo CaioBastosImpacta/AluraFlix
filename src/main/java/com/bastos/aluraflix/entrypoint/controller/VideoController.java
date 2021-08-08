@@ -50,6 +50,15 @@ public class VideoController {
         return ResponseEntity.ok(dataModelResponseVideo);
     }
 
+    @GetMapping("/free")
+    public ResponseEntity<?> getVideosFree() {
+        Page<VideoDomainResponse> videoDomainResponse = videoService.getVideoFree();
+        Page<VideoModelResponse> videoModelResponse = videoMapperModel.toModelResponse(videoDomainResponse);
+        DataModelResponse dataModelResponseVideo = dataModelMapper.setDataModel(videoModelResponse);
+
+        return ResponseEntity.ok(dataModelResponseVideo);
+    }
+
     @PostMapping
     public ResponseEntity<DataModelResponse<VideoModelResponse>> save(@RequestBody @Validated VideoModelRequest videoModelRequest) {
 

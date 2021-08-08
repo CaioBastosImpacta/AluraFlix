@@ -8,7 +8,9 @@ import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,5 +85,10 @@ public class VideoService {
 
     public List<VideoDomainResponse> getByIdCategoriaVideo(Long id) {
         return videoGateway.findByCategoriaId(id);
+    }
+
+    public Page<VideoDomainResponse> getVideoFree() {
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.ASC, "titulo");
+        return videoGateway.getVideoFree(pageable);
     }
 }

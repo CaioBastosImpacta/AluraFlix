@@ -80,6 +80,14 @@ public class VideoImplementation implements VideoGateway {
         return videoMapperDomain.toDomain(videoEntities);
     }
 
+    @Override
+    public Page<VideoDomainResponse> getVideoFree(Pageable pageable) {
+        Page<VideoEntity> videosEntites = videoRepository.findAll(pageable);
+        validaRetornoListaVazia(videosEntites);
+
+        return videoMapperDomain.toDomain(videosEntites);
+    }
+
     private void validaRetornoListaVazia(Page<VideoEntity> videoEntities) {
         if (videoEntities.isEmpty()) {
             throw new NenhumConteudoException();
