@@ -9,6 +9,7 @@ import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.service.enums.CategoriaEnum;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,7 @@ public class CategoriaService {
         return categoriaGateway.getById(id);
     }
 
+    @CacheEvict(value = "listaCategorias", allEntries = true)
     public CategoriaDomainResponse save(CategoriaDomainRequest categoriaDomainRequest) {
         try {
             CategoriaDomainResponse categoriaDomainResponse = categoriaGateway.save(categoriaDomainRequest);
@@ -53,6 +55,7 @@ public class CategoriaService {
         }
     }
 
+    @CacheEvict(value = "listaCategorias", allEntries = true)
     public CategoriaDomainResponse update(Long id, CategoriaDomainRequest categoriaDomainRequest) {
         CategoriaDomainResponse categoriaDomainResponse = getByIdCategoria(id);
 
@@ -71,6 +74,7 @@ public class CategoriaService {
         return categoriaGateway.update(categoriaDomainResponse);
     }
 
+    @CacheEvict(value = "listaCategorias", allEntries = true)
     public void deleteById(Long id) {
         getByIdCategoria(id);
         categoriaGateway.deleteById(id);

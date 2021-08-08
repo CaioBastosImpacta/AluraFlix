@@ -34,7 +34,7 @@ public class HandlerControllerAdviceException extends ResponseEntityExceptionHan
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ExceptionHandler({ ErroInternoServidor.class })
+    @ExceptionHandler({ Exception.class, ErroInternoServidor.class })
     public ResponseEntity<?> handleInternalServer(Exception exception) {
         MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
                 .codigo(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))

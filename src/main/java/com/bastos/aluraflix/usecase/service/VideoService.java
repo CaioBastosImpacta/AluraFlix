@@ -7,7 +7,6 @@ import com.bastos.aluraflix.usecase.gateway.CategoriaGateway;
 import com.bastos.aluraflix.usecase.gateway.VideoGateway;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ public class VideoService {
     VideoGateway videoGateway;
     CategoriaGateway categoriaGateway;
 
-    @Cacheable(value = "listaVideos")
     public Page<VideoDomainResponse> getAllVideos(String search, Pageable pageable) {
 
         if (StringUtils.isNotBlank(search)) {
