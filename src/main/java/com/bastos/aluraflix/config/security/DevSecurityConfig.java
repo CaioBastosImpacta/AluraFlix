@@ -1,4 +1,4 @@
-package com.bastos.aluraflix.config.security;
+/*package com.bastos.aluraflix.config.security;
 
 import com.bastos.aluraflix.dataprovider.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +51,4 @@ public class DevSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
-}
+}*/

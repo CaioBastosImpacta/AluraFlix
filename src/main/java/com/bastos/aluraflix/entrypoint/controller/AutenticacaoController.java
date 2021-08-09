@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
-@Profile("prod")
+//@Profile("prod")
 public class AutenticacaoController {
 
     private final AuthenticationManager authenticationManager;
